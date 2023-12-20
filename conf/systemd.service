@@ -1,15 +1,20 @@
 [Unit]
-Description=Small description of the service
+Description=Misskey: microblogging platform
 After=network.target
 
 [Service]
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__INSTALL_DIR__/
-ExecStart=__INSTALL_DIR__/script
-StandardOutput=append:/var/log/__APP__/__APP__.log
-StandardError=inherit
+WorkingDirectory=__FINALPATH__/
+Environment="__YNH_NODE_LOAD_PATH__"
+Environment="NODE_ENV=production"
+ExecStart=__YNH_NPM__ start
+TimeoutSec=60
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
 
 # Sandboxing options to harden security
 # Depending on specificities of your service/app, you may need to tweak these
