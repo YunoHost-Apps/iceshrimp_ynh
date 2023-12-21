@@ -51,7 +51,7 @@ ram.runtime = "2G"
     main.default = 3020
 
     [resources.apt]
-    packages = "ffmpeg, postgresql, build-essential"
+    packages = "ffmpeg, postgresql, build-essential, git-lfs"
 
     extras.yarn.repo = "deb https://dl.yarnpkg.com/debian/ stable main"
     extras.yarn.key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
