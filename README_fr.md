@@ -22,8 +22,6 @@ Il a été forké de Calckey et Firefish (lui-même forké de Misskey) à la mi-
 
 **Version incluse :** v2023~ynh1
 
-**Démo :** https://demo.example.com
-
 ## Captures d’écran
 
 ![Capture d’écran de Iceshrimp](./doc/screenshots/example.jpg)

@@ -22,8 +22,6 @@ It was forked from Calckey Firefish (itself a fork of Misskey) in mid-2023, to f
 
 **Shipped version:** v2023~ynh1
 
-**Demo:** https://demo.example.com
-
 ## Screenshots
 
 ![Screenshot of Iceshrimp](./doc/screenshots/example.jpg)
