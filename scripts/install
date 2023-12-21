@@ -31,10 +31,23 @@ ynh_install_nodejs --nodejs_version=$NODEJS_VERSION
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir"
-
+mkdir -p "$install_dir"
 chown -R $app:www-data "$install_dir"
+
+git config --system --add safe.directory $install_dir
+git lfs install
+
+# Download, check integrity, uncompress and patch the source from GitHub
+git clone https://iceshrimp.dev/iceshrimp/iceshrimp.git "$install_dir" --quiet
+
+pushd "$install_dir"
+	git reset --hard --quiet $version_commit
+	make
+popd
+
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
+
 
 #=================================================
 # NGINX CONFIGURATION
