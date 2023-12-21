@@ -15,7 +15,7 @@ website = "https://iceshrimp.dev"
 code = "https://iceshrimp.dev/iceshrimp/iceshrimp"
 
 [integration]
-yunohost = ">= 11.1.14"
+yunohost = ">= 11.2"
 architectures = "all" 
 multi_instance = false
 ldap = "not_relevant" 
@@ -53,10 +53,6 @@ ram.runtime = "2G"
 
     [resources.apt]
     packages = "ffmpeg, postgresql, build-essential"
-
-    extras.yarn.repo = "deb https://dl.yarnpkg.com/debian/ stable main"
-    extras.yarn.key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
-    extras.yarn.packages = "yarn"
 
     [resources.database]
     type = "postgresql"
