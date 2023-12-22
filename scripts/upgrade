@@ -56,18 +56,27 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..."
+	ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$install_dir" --keep=".config/default.yml"
+
+	pushd $install_dir
+		chown -R $app:www-data "$install_dir"
+		
+		ynh_exec_as $app git fetch
+    	#git checkout master
+    	ynh_exec_as $app git reset --hard --quiet $version_commit
+		ynh_exec_as $app git pull
+	popd
 fi
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
+
 
 #=================================================
 # UPGRADE DEPENDENCIES
