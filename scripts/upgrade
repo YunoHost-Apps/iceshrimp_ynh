@@ -56,12 +56,11 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+
 if [ "$upgrade_type" == "UPGRADE_APP" ]
+
 then
 	ynh_script_progression --message="Upgrading source files..." --weight=5
-
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir" --keep=".config/default.yml"
 
 	pushd $install_dir
 		chown -R $app:www-data "$install_dir"
@@ -119,6 +118,14 @@ ynh_add_systemd_config
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
+
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..." --weight=1
+
+	ynh_setup_source --dest_dir="$install_dir" --keep=".config/default.yml"
+
 # SETUP LOGROTATE
 #=================================================
 ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
