@@ -67,8 +67,7 @@ then
 		
 		ynh_exec_as $app git fetch
     	#git checkout master
-    	ynh_exec_as $app git reset --hard --quiet $version_commit
-		ynh_exec_as $app git pull
+    	ynh_exec_as $app git pull
 	popd
 fi
 
