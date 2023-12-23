@@ -36,10 +36,6 @@ ram.runtime = "2G"
 
 [resources]
 
-    [resources.sources.main]
-    url = "https://iceshrimp.dev/iceshrimp/iceshrimp/archive/v2023.12.1.tar.gz"
-    sha256 = "b5f3a48e769b1b4ebdb19ec1d22a1a08472953d024337b4c5ae40c3a3a91b49c"
-
     [resources.system_user]
 
     [resources.install_dir]

@@ -1,5 +1,5 @@
 [Unit]
-Description=Iceshrimp: microblogging platform
+Description=Iceschrimp: microblogging platform
 After=network.target
 
 [Service]
