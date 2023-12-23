@@ -5,7 +5,7 @@ name = "Iceshrimp"
 description.en = "$app is a decentralized and federated social networking service, implementing the ActivityPub standard."
 description.fr = "$app est un service de réseau social décentralisé et fédéré, implémentant le standard ActivityPub."
 
-version = "v2023~ynh1"
+version = "v2023.12.1~ynh1"
 
 maintainers = ["oufmilo"]
 
@@ -15,7 +15,7 @@ website = "https://iceshrimp.dev"
 code = "https://iceshrimp.dev/iceshrimp/iceshrimp"
 
 [integration]
-yunohost = ">= 11.1.14"
+yunohost = ">= 11.2"
 architectures = "all" 
 multi_instance = false
 ldap = "not_relevant" 
@@ -26,20 +26,15 @@ ram.runtime = "2G"
 
 [install]
     [install.domain]
-    # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "domain"
 
     [install.init_main_permission]
-    help.en = "If enabled, Firefish will be accessible by people who do not have an account. This can be changed later via the webadmin."
-    help.fr = "Si cette case est cochée, Firefish sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+    help.en = "If enabled, Iceshrimp will be accessible by people who do not have an account. This can be changed later via the webadmin."
+    help.fr = "Si cette case est cochée, Iceshrimp sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
     type = "group"
     default = "visitors"
 
 [resources]
-
-    [resources.sources.main]
-    url = "https://iceshrimp.dev/iceshrimp/iceshrimp/archive/v2023.11.4.tar.gz"
-    sha256 = "e5918afc997f7b3513043ade77f0e3f5a222a724afd6742eed0b9128627a6712"
 
     [resources.system_user]
 
@@ -52,7 +47,7 @@ ram.runtime = "2G"
     main.default = 3020
 
     [resources.apt]
-    packages = "ffmpeg, postgresql, build-essential"
+    packages = "ffmpeg, postgresql, build-essential, git, git-lfs"
 
     extras.yarn.repo = "deb https://dl.yarnpkg.com/debian/ stable main"
     extras.yarn.key = "https://dl.yarnpkg.com/debian/pubkey.gpg"

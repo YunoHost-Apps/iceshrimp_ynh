@@ -32,19 +32,17 @@ ynh_script_progression --message="Reinstalling dependencies..." --weight=5
 ynh_install_nodejs --nodejs_version=$NODEJS_VERSION
 
 #=================================================
-# REINSTALL PNPM
+# REINSTALL YARN
 #=================================================
-ynh_script_progression --message="Reinstalling pnpm..." --weight=1
+ynh_script_progression --message="Reinstalling yarn..." --weight=1
 
-# Define and install pnpm
-pushd "$install_dir"
-	curl https://sh.rustup.rs -sSf | ynh_exec_warn_less ynh_exec_as $app sh -s -- -y
-	export PATH="$install_dir/.cargo/bin:$PATH"	
+# Define and install yarn
+pushd "$install_dir"	
 	ynh_use_nodejs
 	corepack enable
-	corepack prepare pnpm@latest --activate
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH pnpm install
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH NODE_ENV=production pnpm build
+	corepack prepare --activate
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH NODE_ENV=production yarn build
 popd
 
 #=================================================
