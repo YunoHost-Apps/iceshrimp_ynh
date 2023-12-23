@@ -65,9 +65,9 @@ then
 	pushd $install_dir
 		chown -R $app:www-data "$install_dir"
 		
-		ynh_exec_warn_less ynh_exec_as $app git fetch
+		ynh_exec_as $app git fetch
     	#git checkout master
-    	ynh_exec_warn_less ynh_exec_as $app git pull
+    	ynh_exec_as $app git pull
 	popd
 fi
 
