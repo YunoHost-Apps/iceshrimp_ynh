@@ -20,7 +20,7 @@ Iceshrimp is a decentralized and federated social networking service, implementi
 
 It was forked from Calckey Firefish (itself a fork of Misskey) in mid-2023, to focus on stability, performance and usability instead of new features.
 
-**Shipped version:** 2023~ynh1
+**Shipped version:** v2023.12.1~ynh1
 
 ## Screenshots
 
