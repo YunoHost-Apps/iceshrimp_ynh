@@ -1,5 +1,5 @@
 [Unit]
-Description=Misskey: microblogging platform
+Description=Iceshrimp: microblogging platform
 After=network.target
 
 [Service]

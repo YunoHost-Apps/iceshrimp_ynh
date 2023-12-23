@@ -59,3 +59,6 @@ ram.runtime = "2G"
 
     [resources.database]
     type = "postgresql"
+
+    [resources.apt]
+    packages = "iceshrimp"
