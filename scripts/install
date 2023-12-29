@@ -13,12 +13,6 @@ source /usr/share/yunohost/helpers
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
@@ -113,7 +107,6 @@ ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="All workers started"
-
 
 #=================================================
 # END OF SCRIPT

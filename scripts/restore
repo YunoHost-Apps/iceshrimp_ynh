@@ -62,7 +62,6 @@ ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-
 # Set permissions to app files
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
