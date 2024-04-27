@@ -69,8 +69,8 @@ ynh_script_progression --message="Building app... This will take some time." --w
 
 pushd "$install_dir"
 	ynh_use_nodejs
-	env $ynh_node_load corepack enable
-	env $ynh_node_load COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare --activate
+	env $ynh_node_load_PATH corepack enable
+	env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare --activate
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH NODE_ENV=production yarn build
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run init
