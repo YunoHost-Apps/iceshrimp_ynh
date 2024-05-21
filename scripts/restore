@@ -39,9 +39,9 @@ ynh_script_progression --message="Reinstalling yarn..." --weight=1
 # Define and install yarn
 pushd "$install_dir"	
 	ynh_use_nodejs
-	corepack enable
-	corepack prepare --activate
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install 
+	env $ynh_node_load_PATH corepack enable
+	env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare --activate
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn install
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH NODE_ENV=production yarn build
 popd
 
