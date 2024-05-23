@@ -5,7 +5,6 @@ name = "Iceshrimp"
 description.en = "Decentralized and federated social networking service"
 description.fr = "Service de réseau social décentralisé et fédéré"
 
-version = "2023.12.7~ynh1"
 
 maintainers = ["oufmilo"]
 
@@ -15,7 +14,7 @@ website = "https://iceshrimp.dev"
 code = "https://iceshrimp.dev/iceshrimp/iceshrimp"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 11.2.12"
 architectures = "all"
 multi_instance = false
 
