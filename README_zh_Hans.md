@@ -3,6 +3,7 @@
 请勿手动编辑。
 -->
 
+# YunoHost 上的 Iceshrimp
 
 [![集成程度](https://dash.yunohost.org/integration/iceshrimp.svg)](https://dash.yunohost.org/appci/app/iceshrimp) ![工作状态](https://ci-apps.yunohost.org/ci/badges/iceshrimp.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/iceshrimp.maintain.svg)
 
@@ -19,7 +20,7 @@ Iceshrimp is a decentralized and federated social networking service, implementi
 
 It was forked from Calckey Firefish (itself a fork of Misskey) in mid-2023, to focus on stability, performance and usability instead of new features.
 
-**分发版本：** 2023.12.6~ynh1
+**分发版本：** 
 
 ## 截图
 
