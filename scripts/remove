@@ -67,7 +67,6 @@ ynh_remove_nodejs
 # REMOVE VARIOUS FILES
 #=================================================
 # Remove the log files
-ynh_secure_remove --file="/var/log/$app"
 
 #=================================================
 # GENERIC FINALIZATION
