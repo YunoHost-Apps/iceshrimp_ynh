@@ -5,7 +5,7 @@ NON debe editarse manualmente.
 
 # Iceshrimp para YunoHost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/iceshrimp.svg)](https://dash.yunohost.org/appci/app/iceshrimp) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/iceshrimp.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/iceshrimp.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/iceshrimp.svg)](https://ci-apps.yunohost.org/ci/apps/iceshrimp/) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/iceshrimp.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/iceshrimp.maintain.svg)
 
 [![Instalar Iceshrimp con YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=iceshrimp)
 

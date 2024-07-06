@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Iceshrimp YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/iceshrimp.svg)](https://dash.yunohost.org/appci/app/iceshrimp) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/iceshrimp.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/iceshrimp.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/iceshrimp.svg)](https://ci-apps.yunohost.org/ci/apps/iceshrimp/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/iceshrimp.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/iceshrimp.maintain.svg)
 
 [![Instalatu Iceshrimp YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=iceshrimp)
 
