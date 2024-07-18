@@ -5,7 +5,7 @@ name = "Iceshrimp"
 description.en = "Decentralized and federated social networking service"
 description.fr = "Service de réseau social décentralisé et fédéré"
 
-version = "2023.12.7~ynh1"
+version = "2023.12.8~ynh1"
 
 maintainers = ["oufmilo"]
 
