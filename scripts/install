@@ -4,10 +4,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-#=================================================
 # INSTALL DEPENDENCIES
 #=================================================
 ynh_script_progression "Installing dependencies... This might take some time."
@@ -20,21 +16,14 @@ ynh_nodejs_install
 ynh_script_progression "Setting up source files..."
 
 mkdir -p "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
+chown -R $app:www-data "$install_dir"
+
 git lfs install && git lfs pull
 
-# Download, check integrity, uncompress and patch the source from GitHub
 ynh_hide_warnings git clone https://iceshrimp.dev/iceshrimp/iceshrimp.git "$install_dir" --quiet
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Configuring NGINX web server..."
-
-# Create a dedicated NGINX config
-ynh_config_add_nginx
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -47,11 +36,12 @@ ynh_app_setting_set --key=redis_db --value="$redis_db"
 
 ynh_config_add --template="default.yml" --destination="$install_dir/.config/default.yml"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.config/default.yml"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.config/default.yml"
+chmod 400 "$install_dir/.config/default.yml"
+chown $app:$app "$install_dir/.config/default.yml"
+
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # BUILD APP
@@ -59,12 +49,11 @@ ynh_config_add --template="default.yml" --destination="$install_dir/.config/defa
 ynh_script_progression "Building app... This will take some time."
 
 pushd "$install_dir"
-
-	env node_load_PATH corepack enable
-	env node_load_PATH  corepack prepare --activate
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH  yarn
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH NODE_ENV=production yarn build
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH yarn run init
+	ynh_exec_as_app corepack enable
+	ynh_exec_as_app corepack prepare --activate
+	ynh_hide_warnings ynh_exec_as_app yarn
+	ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
+	ynh_hide_warnings ynh_exec_as_app yarn run init
 popd
 
 #=================================================
@@ -72,22 +61,11 @@ popd
 #=================================================
 ynh_script_progression "Configuring $app's systemd service..."
 
-env_path="$PATH"
-# Create a dedicated systemd config
+ynh_config_add_nginx
+
 ynh_config_add_systemd
 
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Configuring log rotation..."
-
-# Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
 
@@ -96,7 +74,6 @@ yunohost service add $app --description="A interplanetary blogging platform" --l
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action="start" --log_path=systemd --wait_until="All workers started"
 
 #=================================================

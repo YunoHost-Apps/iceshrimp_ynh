@@ -3,24 +3,12 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-ynh_script_progression "Checking version..."
-
-#=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-# Stop service before backup, to not loose message in case of failed upgrade and restore
 ynh_systemctl --service=$app --action="stop" --log_path=systemd
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression "Backing up the app before upgrading (may take a while)..."
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -42,24 +30,19 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression "Upgrading source files..."
 
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
+pushd $install_dir
+	#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
+	ynh_hide_warnings ynh_exec_as_app git config --global --add safe.directory "$install_dir"
+	ynh_hide_warnings ynh_exec_as_app git fetch
+    ynh_hide_warnings ynh_exec_as_app git pull
+popd
 
-then
-	ynh_script_progression "Upgrading source files..."
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
-	pushd $install_dir
-		#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
-		ynh_hide_warnings ynh_exec_as_app git config --global --add safe.directory "$install_dir"
-		ynh_hide_warnings ynh_exec_as_app git fetch
-    	ynh_hide_warnings ynh_exec_as_app git pull
-	popd
-fi
-
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
@@ -68,26 +51,17 @@ ynh_script_progression "Upgrading dependencies..."
 ynh_nodejs_install
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Upgrading NGINX web server configuration..."
-
-# Create a dedicated NGINX config
-ynh_config_add_nginx
-
-#=================================================
 # BUILD APP
 #=================================================
 ynh_script_progression "Building app..."
 
 pushd "$install_dir"
-
 	env node_load_PATH corepack enable
 	env node_load_PATH  corepack prepare --activate
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH  yarn cleanall
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH yarn install
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH NODE_ENV=production yarn build
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH yarn migrate
+	ynh_hide_warnings ynh_exec_as_app yarn cleanall
+    ynh_hide_warnings ynh_exec_as_app yarn install
+    ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
+    ynh_hide_warnings ynh_exec_as_app yarn migrate
 popd
 
 #=================================================
@@ -95,21 +69,11 @@ popd
 #=================================================
 ynh_script_progression "Upgrading systemd configuration..."
 
-# Create a dedicated systemd config
+ynh_config_add_nginx
+
 ynh_config_add_systemd
 
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
 
