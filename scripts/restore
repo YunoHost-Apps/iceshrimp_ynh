@@ -22,10 +22,9 @@ ynh_nodejs_install
 #=================================================
 ynh_script_progression "Reinstalling yarn..."
 
-# Define and install yarn
 pushd "$install_dir"
-	env node_load_PATH corepack enable
-	env node_load_PATH  corepack prepare --activate
+	ynh_exec_as_app corepack enable
+	ynh_exec_as_app corepack prepare --activate
 	ynh_hide_warnings ynh_exec_as_app yarn install
 	ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
 popd
