@@ -140,8 +140,8 @@ redis:
 # Sign to ActivityPub GET request (default: false)
 #signToActivityPubGet: true
 
-#allowedPrivateNetworks: [
-#]
+allowedPrivateNetworks:
+  - 127.0.0.1/8
 
 # Upload or download file size limits (bytes)
 #maxFileSize: 262144000
