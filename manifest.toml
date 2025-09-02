@@ -15,7 +15,7 @@ website = "https://iceshrimp.dev"
 code = "https://iceshrimp.dev/iceshrimp/iceshrimp"
 
 [integration]
-yunohost = ">= 11.2.12"
+yunohost = ">= 12.1.17"
 architectures = "all"
 multi_instance = false
 
@@ -57,3 +57,6 @@ ram.runtime = "2G"
 
     [resources.database]
     type = "postgresql"
+
+    [resources.nodejs]
+    version = "20"

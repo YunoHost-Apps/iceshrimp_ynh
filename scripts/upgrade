@@ -6,7 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -79,7 +79,7 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 ynh_script_progression --message="Upgrading dependencies..." --weight=5
 
-ynh_install_nodejs --nodejs_version=$NODEJS_VERSION
+#REMOVEME? ynh_install_nodejs --#REMOVEME? nodejs_version=$NODEJS_VERSION
 
 #=================================================
 # NGINX CONFIGURATION
@@ -95,7 +95,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Building app..."
 
 pushd "$install_dir"
-	ynh_use_nodejs
+	#REMOVEME? ynh_use_nodejs
 	env $ynh_node_load_PATH corepack enable
 	env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare --activate
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn cleanall

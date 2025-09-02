@@ -6,7 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -18,7 +18,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Installing dependencies... This might take some time." --weight=3
 
-ynh_install_nodejs --nodejs_version=$NODEJS_VERSION
+#REMOVEME? ynh_install_nodejs --#REMOVEME? nodejs_version=$NODEJS_VERSION
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -68,7 +68,7 @@ chown $app:$app "$install_dir/.config/default.yml"
 ynh_script_progression --message="Building app... This will take some time." --weight=15
 
 pushd "$install_dir"
-	ynh_use_nodejs
+	#REMOVEME? ynh_use_nodejs
 	env $ynh_node_load_PATH corepack enable
 	env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare --activate
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn
