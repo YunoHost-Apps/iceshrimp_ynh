@@ -20,7 +20,7 @@ Decentralized and federated social networking service
 
 
 ## Screenshots
-![Screenshot of Iceshrimp](./doc/screenshots/example.jpg)
+![Screenshot of Iceshrimp](./doc/screenshots/iceshrimp.jpg)
 
 ## 📦 Developer info
 
