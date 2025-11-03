@@ -2,12 +2,6 @@
 
 source /usr/share/yunohost/helpers
 
-ynh_script_progression "Checking version..."
-
-#=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
@@ -15,11 +9,6 @@ ynh_script_progression "Stopping $app's systemd service..."
 
 # Stop service before backup, to not loose message in case of failed upgrade and restore
 ynh_systemctl --service=$app --action="stop" --log_path=systemd
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression "Backing up the app before upgrading (may take a while)..."
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -41,7 +30,6 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression "Upgrading source files..."
 
 pushd $install_dir
@@ -55,12 +43,17 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Upgrading NGINX web server configuration..."
+ynh_script_progression "Upgrading system configurations related to $app..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
+
+ynh_config_add_systemd
+
+yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
+
+ynh_config_add_logrotate
 
 #=================================================
 # BUILD APP
@@ -75,29 +68,6 @@ pushd "$install_dir"
     ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
     ynh_hide_warnings ynh_exec_as_app yarn migrate
 popd
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression "Upgrading systemd configuration..."
-
-# Create a dedicated systemd config
-ynh_config_add_systemd
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
-
-yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
