@@ -17,14 +17,6 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Configuring NGINX web server..."
-
-# Create a dedicated NGINX config
-ynh_config_add_nginx
-
-#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
@@ -34,6 +26,19 @@ redis_db=$(ynh_redis_get_free_db)
 ynh_app_setting_set --key=redis_db --value="$redis_db"
 
 ynh_config_add --template="default.yml" --destination="$install_dir/.config/default.yml"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+
+ynh_config_add_logrotate
+
+yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
 
 #=================================================
 # BUILD APP
@@ -47,30 +52,6 @@ pushd "$install_dir"
 	ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
 	ynh_hide_warnings ynh_exec_as_app yarn run init
 popd
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression "Configuring $app's systemd service..."
-
-env_path="$PATH"
-# Create a dedicated systemd config
-ynh_config_add_systemd
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Configuring log rotation..."
-
-# Use logrotate to manage application logfile(s)
-ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
-
-yunohost service add $app --description="A interplanetary blogging platform" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
