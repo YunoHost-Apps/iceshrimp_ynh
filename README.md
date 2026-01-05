@@ -11,7 +11,7 @@ It shall NOT be edited by hand.
 Decentralized and federated social networking service
 
 [![🌐 Official app website](https://img.shields.io/badge/Official_app_website-darkgreen?style=for-the-badge)](https://iceshrimp.dev)
-[![Version: 2023.12.14~ynh1](https://img.shields.io/badge/Version-2023.12.14~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/iceshrimp/)
+[![Version: 2026.01.05~ynh1](https://img.shields.io/badge/Version-2026.01.05~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/iceshrimp/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/iceshrimp"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
