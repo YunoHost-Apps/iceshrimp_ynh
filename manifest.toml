@@ -5,7 +5,7 @@ name = "Iceshrimp"
 description.en = "Decentralized and federated social networking service"
 description.fr = "Service de réseau social décentralisé et fédéré"
 
-version = "2023.12.14~ynh1"
+version = "2026.01.05~ynh1"
 
 maintainers = ["oufmilo"]
 
@@ -15,7 +15,7 @@ website = "https://iceshrimp.dev"
 code = "https://iceshrimp.dev/iceshrimp/iceshrimp"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.38"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
@@ -42,7 +42,6 @@ ram.runtime = "2G"
     [resources.system_user]
 
     [resources.install_dir]
-    group = "www-data:r-x"
 
     [resources.permissions]
     main.url = "/"
@@ -57,4 +56,4 @@ ram.runtime = "2G"
     type = "postgresql"
 
     [resources.nodejs]
-    version = "20"
+    version = "22"
