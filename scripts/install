@@ -14,7 +14,7 @@ ynh_hide_warnings git clone https://iceshrimp.dev/iceshrimp/iceshrimp.git "$inst
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -59,7 +59,7 @@ popd
 ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemctl --service=$app --action="start" --log_path=systemd --wait_until="All workers started"
+ynh_systemctl --service=$app --action="start"
 
 #=================================================
 # END OF SCRIPT
